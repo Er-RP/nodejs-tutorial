@@ -5,9 +5,10 @@
 
 // const names = require("./4-names");
 // const sayHi = require("./5-utils");
-const alternativeExports = require("./6-alternative-export");
+// const alternativeExports = require("./6-alternative-export");
+const mindGrenede = require("./7-mind-grenade");
 
 // sayHi("RP");
 // sayHi(names.JOHN);
 // sayHi(names.RAJ);
-console.log(alternativeExports);
+// console.log(alternativeExports);
