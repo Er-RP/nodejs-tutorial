@@ -1,11 +1,11 @@
 // CommonJS, every file is module (by default)
 // Modules - Encapsulated Code (only share minimum)
 
-const JOHN = "john";
+/* require is an Global and we can access it anywhere in the file. it's used to import modules into file. */
 
-const sayHi = (name) => {
-  console.log(`Hello there ${name}`);
-};
+const names = require("./4-names");
+const sayHi = require("./5-utils");
 
 sayHi("RP");
-sayHi(JOHN);
+sayHi(names.JOHN);
+sayHi(names.RAJ);

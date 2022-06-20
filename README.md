@@ -1,7 +1,7 @@
 # nodejs-tutorial
 
-#### 4-names.js
+#### 3-modules.js
 
-1. Run `node 4-names.js` in terminal
+1. Run `node 3-modules.js` in terminal
 
 _Module exports from file_ added.
