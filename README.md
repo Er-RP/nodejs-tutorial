@@ -1,7 +1,5 @@
 # nodejs-tutorial
 
-#### 3-modules.js
+#### 6-alternative-export.js
 
 1. Run `node 3-modules.js` in terminal
-
-_Module exports from file_ added.
