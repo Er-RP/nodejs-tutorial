@@ -1,5 +1,5 @@
 # nodejs-tutorial
 
-#### 1-intro.js
+#### 2-globals.js
 
-1. Run `node 1-intro.js` in terminal
+1. Run `node 2-globals.js` in terminal
