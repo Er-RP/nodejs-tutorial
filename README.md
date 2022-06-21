@@ -1,9 +1,14 @@
 # nodejs-tutorial
 
-#### 12-http.js
+## Event Loop
 
-1. Run `node 12-http.js` in terminal.
+1. Run `npm init -y` , `npm i nodemon --save-dev` in terminal.
 
-2. Visit the [localhost:500](http:localhost:5000)
+2. Add **"start": "nodemon app.js"** in package.json file scripts.
 
-3. Run `ctrl+c` in terminal to stop server.
+3. Copy the each `js` file content inside the _1-event-loop-examples_ and paste it
+   into the **app.js**
+
+4. Run `npm start` in terminal.
+
+5. Press `ctrl+c` in terminal to terminate.

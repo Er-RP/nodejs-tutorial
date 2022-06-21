@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-tutorial",
+  "version": "0.0.1",
+  "description": "node js tutorials",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Er-RP/nodejs-tutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Er-RP/nodejs-tutorial/issues"
+  },
+  "homepage": "https://github.com/Er-RP/nodejs-tutorial#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
