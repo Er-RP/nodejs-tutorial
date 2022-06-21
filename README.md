@@ -1,5 +1,5 @@
 # nodejs-tutorial
 
-#### 10-fs-sync.js
+#### 11-fs-async.js
 
-1. Run `node 10-fs-sync.js` in terminal
+1. Run `node 11-fs-async.js` in terminal
