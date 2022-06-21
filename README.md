@@ -1,5 +1,5 @@
 # nodejs-tutorial
 
-#### 9-path-module.js
+#### 10-fs-sync.js
 
-1. Run `node 9-path-module.js` in terminal
+1. Run `node 10-fs-sync.js` in terminal
