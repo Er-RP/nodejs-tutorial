@@ -1,5 +1,5 @@
 # nodejs-tutorial
 
-#### 8-os-module.js
+#### 9-path-module.js
 
-1. Run `node 8-os-module.js` in terminal
+1. Run `node 9-path-module.js` in terminal
