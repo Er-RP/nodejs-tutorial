@@ -1,31 +1,19 @@
-const { readFile } = require("fs");
+const { readFile, writeFile } = require("fs");
+const util = require("util");
+const readFilePromise = util.promisify(readFile);
+const writeFilePromise = util.promisify(writeFile);
 
 //Custom Async Promise & Refactor to Async
-
-const getText = (path) => {
-  return new Promise((resolve, reject) => {
-    readFile(path, "utf8", (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
-
 // CHECK FILE PATH!!!! [file path is mtach while using this code in app.js]
-// type1
 
-getText(`./content/first.txt`)
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-
-//type 2
 const start = async () => {
   try {
-    const first = await getText("./content/first.txt", "utf8");
-    const second = await getText("./content/second.txt", "utf8");
+    const first = await readFilePromise("./content/first.txt", "utf8");
+    const second = await readFilePromise("./content/second.txt", "utf8");
+    await writeFilePromise(
+      "./content/async-result-mind-grenade.txt",
+      `Woo hoo : ${first} ${second}`
+    );
     console.log(first, second);
   } catch (err) {
     console.log(err);
