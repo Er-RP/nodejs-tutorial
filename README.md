@@ -6,7 +6,7 @@
 
 2. Add **"start": "nodemon app.js"** in package.json file scripts.
 
-3. Copy the each `js` file content inside the _2-async-patterns_ and paste it
+3. Copy the each `js` file from 13 - 17 and paste it
    into the **app.js**
 
 4. Run `npm start` in terminal.
