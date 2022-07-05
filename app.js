@@ -1,18 +1,18 @@
-const { readFile, writeFile } = require("fs").promises;
-//Custom Async Promise & Refactor to Async
-// CHECK FILE PATH!!!! [file path is mtach while using this code in app.js]
+const express = require("express");
 
-const start = async () => {
-  try {
-    const first = await readFile("./content/first.txt", "utf8");
-    const second = await readFile("./content/second.txt", "utf8");
-    await writeFile(
-      "./content/async-result-mind-grenade.txt",
-      `Woo hoo : ${first} ${second}`
-    );
-    console.log(first, second);
-  } catch (err) {
-    console.log(err);
-  }
-};
-start();
+const app = express();
+const PORT = 5000;
+
+app.get("/logger", (_, res) => {
+  console.log("This is an error log");
+  console.log("This is a warn log");
+  console.log("This is a info log");
+  console.log("This is a http log");
+  console.log("This is a debug log");
+
+  res.send("Hello world");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is up and running @ http://localhost:${PORT}`);
+});
