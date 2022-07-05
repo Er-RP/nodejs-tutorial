@@ -1,8 +1,11 @@
 const express = require("express");
 const Logger = require("./src/utils/Logger");
+const morganMiddleware = require("./src/middlewares/morganMiddleware");
 
 const app = express();
 const PORT = 5000;
+
+app.use(morganMiddleware);
 
 app.get("/logger", (req, res) => {
   Logger.error("This is an error log");

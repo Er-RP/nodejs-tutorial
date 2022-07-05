@@ -13,3 +13,5 @@
 5. In Browser naviagte to the _/logger_ path and see the terminal
 
 6. Added **Winston** logger
+
+7. Added **Morgan** Middleware
