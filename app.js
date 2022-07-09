@@ -1,21 +1,34 @@
 const express = require("express");
-const Logger = require("./src/utils/Logger");
-const morganMiddleware = require("./src/middlewares/morganMiddleware");
+const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const { dbURI } = require("./config");
+const authRoutes = require("./routes/authRoutes");
+const requireAuth = require("./middlewares/authMiddleware");
 
 const app = express();
 const PORT = 5000;
 
-app.use(morganMiddleware);
+// middleware
+app.use(express.json());
+app.use(cookieParser());
 
-app.get("/logger", (req, res) => {
-  Logger.error("This is an error log");
-  Logger.warn("This is a warn log");
-  Logger.info("This is a info log");
-  Logger.http("This is a http log");
-  Logger.debug("This is a debug log");
+// database connection
+// const dbURI =
+//   "mongodb+srv://shaun:test1234@cluster0.del96.mongodb.net/node-auth";
+mongoose
+  .connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((result) => console.log("Mongodb Connected"))
+  .catch((err) => console.log(err));
 
-  res.send("Hello world");
-});
+// routes
+app.get("/", (req, res) => res.send("Welcome to JWT Tutorial"));
+app.get("/privateRoute", requireAuth, (req, res) =>
+  res.send("You have access to privateRoute . (You are logged in User)")
+);
+app.use(authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running @ http://localhost:${PORT}`);
