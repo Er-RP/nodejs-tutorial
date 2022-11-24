@@ -1,6 +1,1 @@
-# nodejs-tutorial
-
-## JWT ( Authentication )
-
-1. `npm install`
-2. `npm run dev`
+#### Use this branch to create a new empty branch
