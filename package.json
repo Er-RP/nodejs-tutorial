@@ -1,0 +1,29 @@
+{
+  "name": "babel-tut",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx babel index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Er-RP/nodejs-tutorial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Er-RP/nodejs-tutorial/issues"
+  },
+  "homepage": "https://github.com/Er-RP/nodejs-tutorial#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "save-dev": "^0.0.1-security"
+  }
+}
