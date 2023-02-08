@@ -18,5 +18,5 @@ app.get("/logger", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is up and running @ http://localhost:${PORT}`);
+  Logger.info(`Server is up and running @ http://localhost:${PORT}`);
 });
