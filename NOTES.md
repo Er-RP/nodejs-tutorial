@@ -4,6 +4,7 @@
 - ## [Express](#express-1)
 - ## [Multiple Environments](#multiple-environments-1)
 - ## [Error Handling](#error-handling-1)
+- ## [Logging](#logging-1)
 
 ---
 
@@ -211,3 +212,157 @@ app.listen(PORT, () =>
 5. Now navigate in browser to _/error_ route and make sure custom errors are thrown.
 
 ---
+
+### Logging
+
+Install the following packages
+
+```sh
+npm install winston morgan
+```
+
+1. Create a new folder _utils_ and create a file _Logger.js_ inside the new folder.
+
+> Logger.js
+
+```js
+const { createLogger, transports, format, addColors } = require("winston");
+const { combine, timestamp, label, printf, prettyPrint, colorize } = format;
+const levels = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  debug: 4,
+};
+const level = () => {
+  const env = process.env.NODE_ENV || "development";
+  const isDevelopment = env === "development";
+  return isDevelopment ? "debug" : "warn";
+};
+const colors = {
+  error: "red",
+  warn: "yellow",
+  info: "green",
+  http: "magenta",
+  debug: "blue",
+};
+addColors(colors);
+const colorizer = colorize();
+const defaultFormatter = combine(
+  timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+  prettyPrint(
+    (info) => `${info.level.toUpperCase()} ${info.timestamp}  ${info.message}`
+  )
+);
+const allTransports = [
+  new transports.Console({
+    format: combine(
+      timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+      printf((info) =>
+        colorizer.colorize(
+          `${info.level}`,
+          `${info.level.toUpperCase()} ${info.timestamp} : ${info.message}`
+        )
+      )
+    ),
+  }),
+  new transports.File({
+    filename: "logs/error.log",
+    level: "error",
+    format: defaultFormatter,
+  }),
+  new transports.File({
+    filename: "logs/all.log",
+    format: defaultFormatter,
+  }),
+];
+
+const Logger = createLogger({
+  level: level(),
+  levels,
+  format: combine(
+    label({ label: "CUSTOM LOGGER" }),
+    timestamp({
+      format: "MMM-DD-YYYY HH:mm:ss",
+    }),
+    prettyPrint()
+  ),
+  transports: allTransports,
+});
+
+module.exports = Logger;
+```
+
+2. Import the _Logger_ in _index.js_ and replace the following code in bottom
+
+```js
+app.listen(PORT, () =>
+  Logger.info(`Example app listening on http://localhost:${PORT}`)
+);
+```
+
+3. Make sure now your logs are appearing colorful and logged in file.
+
+4. Create a _middlewares_ folder and create a _requestMiddleware.js_
+
+> requestMiddleware.js
+
+```js
+const morgan = require("morgan");
+const Logger = require("../utils/Logger");
+
+const stream = {
+  write: (message) => Logger.http(message),
+};
+
+const skip = (req, res) => {
+  const env = process.env.NODE_ENV || "development";
+  return env !== "development" || res.statusCode === 400;
+};
+const requestMiddleware = morgan(
+  ":method :url :status :res[content-length] - :response-time ms",
+  { stream, skip }
+);
+
+module.exports = requestMiddleware;
+```
+
+5. Import the request middleware intp _index.js_, add middleware in top.
+6. emove _Logger_ import and change the app.listen to normal console.log
+
+> index.js
+
+```js
+const express = require("express");
+const { PORT } = require("./config");
+const errorHandler = require("./error_handlers/errorHandler");
+const { NotFoundError, CustomError } = require("./error_handlers/customErrors");
+const requestMiddleware = require("./middlewares/requestMiddleware");
+const app = express();
+
+//Middlewares
+// 1. Request middleware
+app.use(requestMiddleware);
+
+app.get("/", (req, res) => res.send("Hello World!"));
+
+app.get("/error", (req, res, next) => {
+  const error = new CustomError(`Error in request at ${req.path}`);
+  error.statusCode = 400;
+  next(error);
+});
+//No-Contet for favicon.ico
+app.get("/favicon.ico", (req, res) => res.status(204).json());
+app.use((req, res, next) => {
+  const message = "Request not found";
+  const err = new NotFoundError(`${message} for path ${req.path}`);
+  next(err);
+});
+
+app.use(errorHandler);
+
+app.listen(PORT, () =>
+  console.info(`Example app listening on http://localhost:${PORT}`)
+);
+```
