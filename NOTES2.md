@@ -1,6 +1,6 @@
 # NOTES PART 2
 
-- ## [MongoDB](#mongodb-1)
+- ## [MongoDB](#mongodb-2)
   - ## [Postman](#postman-1)
   - ## [Debug](#debug-1)
   - ## [Express Middlewares](#express-middlewares-1)
@@ -24,8 +24,7 @@ npm i mongoose
 
 1.  Create a _connectDB.js_ file in utils folder.
 
-    <details>
-      <summary>connectDB.js</summary>
+> connectDB.js
 
     ```js
     const mongoose = require("mongoose");
@@ -44,12 +43,9 @@ npm i mongoose
     module.exports = connectDB;
     ```
 
-    </details>
-
 2.  Import the _connectDB_ into index.js, invoke the `connectDB` function, make sure our server listen only after the DB connected.
 
-    <details>
-      <summary>index.js</summary>
+> index.js
 
     ```js
     const express = require("express");
@@ -92,14 +88,11 @@ npm i mongoose
     );
     ```
 
-     </details>
-
 3.  Create a folders _models,controllers,routes_ in the root folder.
 
 4.  Inside models folder create _userModel.js_ and create a schema for user
 
-    <details>
-        <summary>userModel.js</summary>
+> userModel.js
 
     ```js
     const mongoose = require("mongoose");
@@ -128,12 +121,9 @@ npm i mongoose
     module.exports = mongoose.model("User", userSchema);
     ```
 
-      </details>
-
 5.  Inside controllers folder create _userController.js_
 
-    <details>
-      <summary>_userController.js</summary>
+> userController.js
 
     ```js
     const USER = require("../models/userModel");
@@ -153,12 +143,9 @@ npm i mongoose
     module.exports = { CREATE };
     ```
 
-    </details>
-
 6.  Inside routes folder create _index.js_ and _userRoute.js_
 
-    <details>
-      <summary>userRoute.js</summary>
+> userRoute.js
 
     ```js
     const express = require("express");
@@ -170,10 +157,7 @@ npm i mongoose
     module.exports = router;
     ```
 
-    </details>
-
-    <details>
-      <summary>index.js</summary>
+> index.js</summary>
 
     ```js
     const express = require("express");
@@ -181,8 +165,6 @@ npm i mongoose
     router.use("/user", require("./userRoute"));
     module.exports = router;
     ```
-
-    </details>
 
 #### Postman
 
