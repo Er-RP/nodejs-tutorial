@@ -1,5 +1,7 @@
 const express = require("express");
 const { PORT } = require("./config");
+const mongoose = require("mongoose");
+const connectDB = require("./utils/connectDB");
 const errorHandler = require("./error_handlers/errorHandler");
 const { NotFoundError, CustomError } = require("./error_handlers/customErrors");
 const requestMiddleware = require("./middlewares/requestMiddleware");
@@ -8,6 +10,13 @@ const app = express();
 //Middlewares
 // 1. Request middleware
 app.use(requestMiddleware);
+// 2. Request JSON body parser middleware
+app.use(express.json());
+
+//Connect to MongoDB
+connectDB();
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "Connection Error :"));
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
@@ -20,6 +29,9 @@ app.get("/error", (req, res, next) => {
 //No-Contet for favicon.ico
 app.get("/favicon.ico", (req, res) => res.status(204).json());
 
+//MongoDB routes
+app.use("/api", require("./routes"));
+
 //Error handler for the not found route.
 app.use((req, res, next) => {
   const message = "Request not found";
@@ -30,6 +42,9 @@ app.use((req, res, next) => {
 //Error Handler
 app.use(errorHandler);
 
-app.listen(PORT, () =>
-  console.info(`Example app listening on http://localhost:${PORT}`)
+//Make sure our server is listen after sucessfully connected with mongodb
+db.once("open", () =>
+  app.listen(PORT, () =>
+    console.info(`Example app listening on http://localhost:${PORT}`)
+  )
 );
