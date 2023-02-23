@@ -3,11 +3,10 @@ const USER = require("../models/userModel");
 const CREATE = async (req, res, next) => {
   try {
     const payload = req.body;
-    console.log("User Payload :", JSON.stringify(payload));
     const newUser = await USER.create(payload);
-    return res.json(newUser);
+    return res.status(201).json(newUser);
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 };
 const GET = async (req, res, next) => {};

@@ -68,7 +68,7 @@ const allTransports = [
         colorizer.colorize(
           `${info.level}`,
           `[RP ${
-            isDevelopment() ? "DEV" : "PROD "
+            isDevelopment() ? "DEV" : "PROD"
           } LOGGER] ${info.level.toUpperCase()} ${info.timestamp} : ${
             info.message
           }`
@@ -90,12 +90,45 @@ const allTransports = [
   }),
 ];
 
+const productionTransports = [
+  // Allow the use the console to print the messages
+  //format color only to
+  new transports.Console({
+    format: combine(
+      // Tell Winston that the logs must be colored
+      //   colorize({ all: true }),
+      // Add the message timestamp with the preferred format
+      timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+      // Define the format of the message showing the timestamp, the level and the message
+      //   printf((info) => `${info.level} ${info.timestamp}: ${info.message}`),
+
+      //Workaround for print timestamp with color
+      printf((info) =>
+        colorizer.colorize(
+          `${info.level}`,
+          `[RP ${
+            isDevelopment() ? "DEV" : "PROD "
+          } LOGGER] ${info.level.toUpperCase()} ${info.timestamp} : ${
+            info.message
+          }`
+        )
+      )
+    ),
+  }),
+];
+
 // Create the logger instance that has to be exported
 // and used to log messages.
-const Logger = createLogger({
-  level: level(),
-  levels,
-  transports: allTransports,
-});
+const Logger = isDevelopment()
+  ? createLogger({
+      level: level(),
+      levels,
+      transports: allTransports,
+    })
+  : createLogger({
+      level: level(),
+      levels,
+      transports: productionTransports,
+    });
 
 module.exports = Logger;

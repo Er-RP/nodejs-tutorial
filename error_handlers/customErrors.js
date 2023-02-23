@@ -18,4 +18,15 @@ class BadRequestError extends CustomError {
   }
 }
 
-module.exports = { BadRequestError, NotFoundError, CustomError };
+class ValidationError extends CustomError {
+  constructor(message) {
+    super(message || "Validation error", 422);
+  }
+}
+
+module.exports = {
+  BadRequestError,
+  NotFoundError,
+  CustomError,
+  ValidationError,
+};
