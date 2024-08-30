@@ -18,9 +18,9 @@ class BadRequestError extends CustomError {
   }
 }
 
-class ValidationError extends CustomError {
+class UnAuthorizedError extends CustomError {
   constructor(message) {
-    super(message || "Validation error", 422);
+    super(message || "Unauthorized", 401);
   }
 }
 
@@ -28,5 +28,5 @@ module.exports = {
   BadRequestError,
   NotFoundError,
   CustomError,
-  ValidationError,
+  UnAuthorizedError,
 };

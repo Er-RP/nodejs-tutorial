@@ -1,15 +1,17 @@
-const { ValidationError } = require("./customErrors");
-
 const apiErrorHandler = (err, req, res, next) => {
   if (err?.name === "ValidationError") {
-    const { statusCode, name } = new ValidationError(err?.message);
-    return res.status(statusCode).json({
+    const errors = {};
+    for (let field in err?.errors) {
+      errors[field] = err?.errors[field].message;
+    }
+    return res.status(422).json({
       error: {
-        name,
-        message: err?.message,
+        name: err?.name,
+        message: errors,
       },
     });
   }
+
   next(err);
 };
 
